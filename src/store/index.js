@@ -1,10 +1,11 @@
 import { createStore, combineReducers } from "redux";
-import { todosReducer } from "./reducer";
+import { filterReducer } from "./filterReducer";
+import { todosReducer } from "./todoReducer";
 
 export default createStore(
   combineReducers({
    todos: todosReducer,
-   filter: (state = 0, action) => state
+   filter: filterReducer,
   }),
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
   );
