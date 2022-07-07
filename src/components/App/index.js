@@ -1,22 +1,23 @@
 import React from "react";
 import { connect } from "react-redux";
+import { UPDATE_TODO_ACTION } from "../../store/todosReducer";
 
 import './styles.css';
 
-function TodoItem ({todo, onToggle}) {
+function TodoItem ({ todo, onToggle }) {
   return(
       <li>
         <label>
           <input type="checkbox"
                  checked={todo.completed}
-                 onChange={() => onToggle(todo)} >
-            {todo.title}
-          </input>
+                 onChange={() => onToggle(todo)} />
+                {todo.title}
+         
         </label>
       </li>
   )}
 
-function App({todos}) {
+export function App({ todos, onToggle }) {
   return(
  <ul>                                                                                                                                  
   {todos.map(todo => <TodoItem 
@@ -28,10 +29,13 @@ function App({todos}) {
  )}
 
 export default connect(
-  (state) => {
-    return({
-    todos: state.todos
-  })}
+  (state) => ({ todos: state.todos }),
+  (dispatch) => ({
+    onToggle: todo => dispatch({
+      type: UPDATE_TODO_ACTION,
+      payload: {...todo, completed: !todo.completed}
+    })
+  })
   )(App)
 
 
