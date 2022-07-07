@@ -1,8 +1,10 @@
 import React from "react";
 import { connect } from "react-redux";
-import { UPDATE_TODO_ACTION } from "../../store/todosReducer";
+import { todosSelector } from "../../store/selectors";
+import { UPDATE_TODO_ACTION } from "../../store/reducer";
 
 import './styles.css';
+import { toggleTodoAction } from "../../store/action";
 
 function TodoItem ({ todo, onToggle }) {
   return(
@@ -29,12 +31,9 @@ export function App({ todos, onToggle }) {
  )}
 
 export default connect(
-  (state) => ({ todos: state.todos }),
+  (state) => ({ todos: todosSelector(state) }),
   (dispatch) => ({
-    onToggle: todo => dispatch({
-      type: UPDATE_TODO_ACTION,
-      payload: {...todo, completed: !todo.completed}
-    })
+    onToggle: todo => dispatch(toggleTodoAction(todo))
   })
   )(App)
 
